@@ -13,7 +13,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18' # Use the appropriate Node.js version
 
       - name: Install axios
         run: npm install axios
@@ -27,7 +27,7 @@ jobs:
         env:
           PACKAGE_URL: ${{ vars.NPMJS_PACKAGE_URL }}
         run: |
-          echo "const axios = require('axios');
+          echo 'const axios = require("axios");
           let a = 0;
           let counter = 0;
           const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
@@ -39,15 +39,15 @@ jobs:
                 await axios.get(uri);
                 a++;
                 counter++;
-                console.log(\`Added \${a} Downloads! (\${counter}/\${maxRuns})\`);
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                console.log(`Added ${a} Downloads! (${counter}/${maxRuns})`);
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
               } catch (error) {
-                console.error(\`Error during request: \${error.message}\`);
+                console.error(`Error during request: ${error.message}`);
                 break;
               }
             }
-            console.log(\`Script completed after \${maxRuns} executions.\`);
+            console.log(`Script completed after ${maxRuns} executions.`);
           }
 
-          addDL();" > script.js
+          addDL();' > script.js
           node script.js
