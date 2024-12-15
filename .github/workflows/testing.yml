@@ -19,12 +19,15 @@ jobs:
         run: npm install axios
 
       - name: Run fetch-downloads script
+        env:
+          PACKAGE_URL: ${{ vars.NPMJS_PACKAGE_URL }}
         run: |
           echo "const axios = require('axios');
           let a = 0;
           let counter = 0;
           const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
-          const uri = 'https://registry.npmjs.org/@prateek-wayne/backstage-plugin-scaffold-insight/-/backstage-plugin-scaffold-insight-0.1.1.tgz';
+          const uri = process.env.PACKAGE_URL;
+          console.log(uri);
 
           async function addDL() {
             while (counter < maxRuns) {
