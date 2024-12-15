@@ -13,7 +13,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use the appropriate Node.js version
+          node-version: '18' 
 
       - name: Install axios
         run: npm install axios
@@ -27,17 +27,17 @@ jobs:
           let counter = 0;
           const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
           const uri = process.env.PACKAGE_URL;  // Access the environment variable here
-          console.log(uri);
+          console.log(`Logging URL:${uri}`);
           async function addDL() {
             while (counter < maxRuns) {
               try {
                 await axios.get(uri);  // Using the uri which is the environment variable
                 a++;
                 counter++;
-                console.log(\`Added \${a} Downloads! (\${counter}/\${maxRuns})\`);
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+                console.log(\`Added \${a} Downloads 🚚 (\${counter}/\${maxRuns})\`);
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 1 second
               } catch (error) {
-                console.error(\`Error during request: \${error.message}\`);
+                console.error(\`Error  ⧯ during request: \${error.message}\`);
                 break;
               }
             }
