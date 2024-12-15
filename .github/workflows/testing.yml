@@ -20,10 +20,10 @@ jobs:
 
       - name: Debug environment variable
         env:
-          PACKAGE_URL: ${{ secrets.NPMJS_PACKAGE_URL }}  # Use secrets for secure storage
+          PACKAGE_URL: ${{ vars.NPMJS_PACKAGE_URL }}  # Use secrets for secure storage
         run: |
           echo "PACKAGE_URL: $PACKAGE_URL"
-          
+          ss
           # Optional: Check if the variable is not empty
           if [ -z "$PACKAGE_URL" ]; then
             echo "PACKAGE_URL is not set!"
