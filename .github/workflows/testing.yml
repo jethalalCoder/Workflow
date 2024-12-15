@@ -20,34 +20,13 @@ jobs:
 
       - name: Debug environment variable
         env:
-          PACKAGE_URL: ${{ vars.NPMJS_PACKAGE_URL }}
-        run: echo "PACKAGE_URL: $PACKAGE_URL"
-
-      - name: Run fetch-downloads script
-        env:
-          PACKAGE_URL: ${{ vars.NPMJS_PACKAGE_URL }}
+          PACKAGE_URL: ${{ secrets.NPMJS_PACKAGE_URL }}  # Use secrets for secure storage
         run: |
-          echo 'const axios = require("axios");
-          let a = 0;
-          let counter = 0;
-          const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
-          const uri = process.env.PACKAGE_URL;
-
-          async function addDL() {
-            while (counter < maxRuns) {
-              try {
-                await axios.get(uri);
-                a++;
-                counter++;
-                console.log(`Added ${a} Downloads! (${counter}/${maxRuns})`);
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
-              } catch (error) {
-                console.error(`Error during request: ${error.message}`);
-                break;
-              }
-            }
-            console.log(`Script completed after ${maxRuns} executions.`);
-          }
-
-          addDL();' > script.js
-          node script.js
+          echo "PACKAGE_URL: $PACKAGE_URL"
+          
+          # Optional: Check if the variable is not empty
+          if [ -z "$PACKAGE_URL" ]; then
+            echo "PACKAGE_URL is not set!"
+          else
+            echo "PACKAGE_URL is available"
+          fi
