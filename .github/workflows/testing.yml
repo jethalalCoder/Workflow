@@ -27,22 +27,10 @@ jobs:
           let counter = 0;
           const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
           const uri = process.env.PACKAGE_URL;
-          console.log(uri);
+         
 
           async function addDL() {
-            while (counter < maxRuns) {
-              try {
-                await axios.get(uri);
-                a++;
-                counter++;
-                console.log(\`Added \${a} Downloads! (\${counter}/\${maxRuns})\`);
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
-              } catch (error) {
-                console.error(\`Error during request: \${error.message}\`);
-                break;
-              }
-            }
-            console.log(\`Script completed after \${maxRuns} executions.\`);
+            console.log(uri);
           }
 
           addDL();" > script.js
