@@ -27,7 +27,7 @@ jobs:
           let counter = 0;
           const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
           const uri = process.env.PACKAGE_URL;  // Access the environment variable here
-
+          console.log(uri);
           async function addDL() {
             while (counter < maxRuns) {
               try {
