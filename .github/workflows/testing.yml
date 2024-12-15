@@ -6,27 +6,11 @@ on:
   workflow_dispatch: # Allows manual triggering from the Actions tab
 
 jobs:
-  fetch-downloads:
+  top-secret:
     runs-on: ubuntu-latest
+    env:
+      MY_APP_ID: ${{ vars.NPMJS_PACKAGE_URL }}
 
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' # Use the appropriate Node.js version
-
-      - name: Install axios
-        run: npm install axios
-
-      - name: Debug environment variable
-        env:
-          PACKAGE_URL: ${{ vars.NPMJS_PACKAGE_URL }}  # Use secrets for secure storage
-        run: |
-          echo "PACKAGE_URL: $PACKAGE_URL"
-          ss
-          # Optional: Check if the variable is not empty
-          if [ -z "$PACKAGE_URL" ]; then
-            echo "PACKAGE_URL is not set!"
-          else
-            echo "PACKAGE_URL is available"
-          fi
+      - name: Read a variable
+        run: echo "My NPMJS_PACKAGE_URL value is ${{ vars.NPMJS_PACKAGE_URL }}"
