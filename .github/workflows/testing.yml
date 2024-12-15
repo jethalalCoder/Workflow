@@ -27,8 +27,8 @@ jobs:
           let counter = 0;
           const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
           const uri = process.env.PACKAGE_URL;  // Access the environment variable here
-          console.log(`Logging URL:${uri}`);
           async function addDL() {
+          console.log(`Logging URL:${uri}`);
             while (counter < maxRuns) {
               try {
                 await axios.get(uri);  // Using the uri which is the environment variable
