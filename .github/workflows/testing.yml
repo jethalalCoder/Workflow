@@ -1,0 +1,45 @@
+name: Daily Fetch Downloads
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  fetch-downloads:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Use the appropriate Node.js version
+
+      - name: Install axios
+        run: npm install axios
+
+      - name: Run fetch-downloads script
+        run: |
+          const axios = require('axios');
+          let a = 0;
+          let counter = 0;
+          const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
+          const uri = `https://registry.npmjs.org/@prateek-wayne/backstage-plugin-scaffold-insight/-/backstage-plugin-scaffold-insight-0.1.1.tgz`;
+
+          async function addDL() {
+            while (counter < maxRuns) {
+              try {
+                await axios.get(uri);
+                a++;
+                counter++;
+                console.log(`Added ${a} Downloads! (${counter}/${maxRuns})`);
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+              } catch (error) {
+                console.error(`Error during request: ${error.message}`);
+                break;
+              }
+            }
+            console.log(`Script completed after ${maxRuns} executions.`);
+          }
+
+          addDL();
