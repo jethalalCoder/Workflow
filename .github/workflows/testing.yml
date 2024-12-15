@@ -6,11 +6,43 @@ on:
   workflow_dispatch: # Allows manual triggering from the Actions tab
 
 jobs:
-  top-secret:
+  fetch-downloads:
     runs-on: ubuntu-latest
-    env:
-      MY_APP_ID: ${{ vars.NPMJS_PACKAGE_URL }}
 
     steps:
-      - name: Read a variable
-        run: echo "My NPMJS_PACKAGE_URL value is ${{ vars.NPMJS_PACKAGE_URL }}"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Use the appropriate Node.js version
+
+      - name: Install axios
+        run: npm install axios
+
+      - name: Run fetch-downloads script
+        env:
+          PACKAGE_URL: ${{ vars.NPMJS_PACKAGE_URL }}  # Pass the environment variable here
+        run: |
+          echo "const axios = require('axios');
+          let a = 0;
+          let counter = 0;
+          const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
+          const uri = process.env.PACKAGE_URL;  # Access the environment variable here
+
+          async function addDL() {
+            while (counter < maxRuns) {
+              try {
+                await axios.get(uri);  # Using the uri which is the environment variable
+                a++;
+                counter++;
+                console.log(\`Added \${a} Downloads! (\${counter}/\${maxRuns})\`);
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+              } catch (error) {
+                console.error(\`Error during request: \${error.message}\`);
+                break;
+              }
+            }
+            console.log(\`Script completed after \${maxRuns} executions.\`);
+          }
+
+          addDL();" > script.js
+          node script.js
