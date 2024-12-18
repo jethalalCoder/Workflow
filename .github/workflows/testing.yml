@@ -32,7 +32,6 @@ jobs:
 
           console.log(\`Randomly chosen maxRequests: \${maxRequests}\`);
           async function addDL() {
-            console.log(\`Logging URL: \${uri}\`);
             while (counter < maxRequests) {
               try {
                 await axios.get(uri);
