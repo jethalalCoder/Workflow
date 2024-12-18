@@ -25,23 +25,26 @@ jobs:
           echo "const axios = require('axios');
           let a = 0;
           let counter = 0;
-          const maxRuns = Math.floor(Math.random() * (60 - 40 + 1)) + 40;
+          const minRuns = 5;
+          const maxRuns = 10;
+          const maxRequests = Math.floor(Math.random() * (maxRuns - minRuns + 1)) + minRuns; // Random 5-10
           const uri = process.env.PACKAGE_URL;  // Access the environment variable here
+
           async function addDL() {
-          console.log(`Logging URL:${uri}`);
-            while (counter < maxRuns) {
+            console.log(\`Logging URL: \${uri}\`);
+            while (counter < maxRequests) {
               try {
                 await axios.get(uri);  // Using the uri which is the environment variable
                 a++;
                 counter++;
-                console.log(\`Added \${a} Downloads 🚚 (\${counter}/\${maxRuns})\`);
+                console.log(\`Added \${a} Downloads 🚚 (\${counter}/\${maxRequests})\`);
                 await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 1 second
               } catch (error) {
-                console.error(\`Error  ⧯ during request: \${error.message}\`);
+                console.error(\`Error during request: \${error.message}\`);
                 break;
               }
             }
-            console.log(\`Script completed after \${maxRuns} executions.\`);
+            console.log(\`Script completed after \${counter} requests.\`);
           }
 
           addDL();" > script.js
