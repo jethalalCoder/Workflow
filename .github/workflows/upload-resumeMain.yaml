@@ -1,0 +1,25 @@
+name: Update Naukri Resume for Profile1
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+  workflow_dispatch:
+
+jobs:
+  upload-resume:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload resume to Naukri for Profile1
+        # Use ./ format for local actions with act
+        uses: Prateek-Wayne/naukri-resume-action@v1
+        with:
+          username: ${{ secrets.NAUKRI_USERNAME_MAIN }}
+          password: ${{ secrets.NAUKRI_PASSWORD_MAIN }}
+          profile_id: ${{ secrets.NAUKRI_PROFILE_ID_MAIN }}
+          resume_path: |-
+            resumes/resume2.pdf
+            resumes/resume3.pdf
+            resumes/resume1.pdf
