@@ -7,7 +7,7 @@ on:
 
 jobs:
   upload-resume:
-    runs-on: ubuntu-latest
+    runs-on: naukri-ec2
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,6 +20,5 @@ jobs:
           password: ${{ secrets.NAUKRI_PASSWORD_MAIN }}
           profile_id: ${{ secrets.NAUKRI_PROFILE_ID_MAIN }}
           resume_path: |-
-            resumes/resume2.pdf
-            resumes/resume3.pdf
-            resumes/resume1.pdf
+            resumes/Prateek.pdf
+            resumes/PrateekResume.pdf

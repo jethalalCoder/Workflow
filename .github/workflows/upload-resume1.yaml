@@ -1,8 +1,8 @@
 name: Update Naukri Resume for Profile1
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Run daily at midnight
+  # schedule:
+  #   - cron: '0 0 * * *' # Run daily at midnight
   workflow_dispatch:
 
 jobs:
@@ -20,6 +20,5 @@ jobs:
           password: ${{ secrets.NAUKRI_PASSWORD }}
           profile_id: ${{ secrets.NAUKRI_PROFILE_ID }}
           resume_path: |-
-            resumes/resume2.pdf
-            resumes/resume3.pdf
-            resumes/resume1.pdf
+            resumes/Prateek.pdf
+            resumes/PrateekResume.pdf
