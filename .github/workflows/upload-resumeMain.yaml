@@ -2,7 +2,7 @@ name: Update Naukri Resume for ProfileMAIN
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Run daily at midnight
+    - cron: '0 0 * * *' # Run daily at midnight :)
   workflow_dispatch:
 
 jobs:
