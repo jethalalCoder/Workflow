@@ -20,4 +20,4 @@ jobs:
           password: ${{ secrets.NAUKRI_PASSWORD_MAIN }}
           profile_id: ${{ secrets.NAUKRI_PROFILE_ID_MAIN }}
           resume_path: |-
-            ./resumes/PrateekResume.pdf
+            ./resumes/PRATEEK__RESUME.pdf
