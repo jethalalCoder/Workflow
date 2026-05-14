@@ -20,4 +20,4 @@ jobs:
           password: ${{ secrets.AJAY_NAUKRI_PASSWORD }}
           profile_id: ${{ secrets.AJAY_PROFILE_ID }}
           resume_path: |-
-            ./resumes/Ajay_Resume.pdf
+            ./resumes/SDE_Resume_Ajay_Full_Stack.pdf
