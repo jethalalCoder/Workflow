@@ -2,7 +2,16 @@ name: Update Naukri Resume for ProfileMAIN
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Run 3 times a day:)
+    # 8 AM IST → 10 PM IST every 2 hours
+    - cron: '30 2 * * *'   # 8 AM
+    - cron: '30 4 * * *'   # 10 AM
+    - cron: '30 6 * * *'   # 12 PM
+    - cron: '30 8 * * *'   # 2 PM
+    - cron: '30 10 * * *'  # 4 PM
+    - cron: '30 12 * * *'  # 6 PM
+    - cron: '30 14 * * *'  # 8 PM
+    - cron: '30 16 * * *'  # 10 PM
+
   workflow_dispatch:
 
 jobs:
