@@ -24,27 +24,29 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generate profile summary via AI
-        id: ai_summary
-        uses: actions/ai-inference@v1
-        with:
-          prompt: |
-            Write a professional Naukri profile summary for a Software Development Engineer.
-            Keep it under 2500 characters. Plain paragraph text only — no bullet points, no markdown, no special characters.
+              id: ai_summary
+              uses: actions/ai-inference@v1
+              with:
+                prompt: |
+                  Write a professional Naukri profile summary for a Software Development Engineer.
+                  Keep it between 80 and 150 words. Plain paragraph text only — no bullet points, no markdown, no special characters.
+                  ... (same prompt as before)
 
-            Candidate profile:
-            - Title: Software Development Engineer (SDE I) at Philips, ~3 years experience
-            - Domain: SaaS platform for hospital medical equipment tracking (Ultrasound Fleet Manager)
-            - Backend: Java, Spring Boot, Node.js, Express.js, TypeScript
-            - Frontend: React.js
-            - Cloud & Infra: AWS (EKS, EC2, S3, Secrets Manager), Kubernetes, Docker
-            - Observability: OpenTelemetry, Prometheus, Grafana
-            - CI/CD: GitHub Actions
-            - Strengths: REST APIs, microservices, caching, query optimization, distributed systems
-            - Certifications: AWS Certified Cloud Practitioner
-            - Open source: published npm plugin, contributor to 10K-star project (JSONCrack)
-            - Looking for: backend or full stack SDE roles
+            - name: Validate and fallback summary
+              id: final_summary
+              run: |
+                SUMMARY="${{ steps.ai_summary.outputs.response }}"
+                WORD_COUNT=$(echo "$SUMMARY" | wc -w)
+                echo "Word count: $WORD_COUNT"
 
-            Write in first person, confident tone. Start with the role/experience line. End with what kind of opportunity they are seeking.
+                if [ "$WORD_COUNT" -lt 50 ] || [ "$WORD_COUNT" -gt 1000 ]; then
+                  echo "AI summary out of range ($WORD_COUNT words), using fallback."
+                  SUMMARY="Software Development Engineer with 3 years of experience at Philips, building scalable cloud-native applications and backend systems. Experienced in developing REST APIs, microservices architecture, and improving system performance through caching and query optimization. Proficient in Java, Spring Boot, Node.js, and TypeScript, with hands-on experience in AWS, Kubernetes, Docker, and CI/CD pipelines. Strong understanding of distributed systems and observability using OpenTelemetry, Prometheus, and Grafana. Published an npm plugin and contributed to a 10K-star open source project. Currently seeking backend or full stack SDE roles to build high-impact systems."
+                fi
+
+                echo "summary<<EOF" >> $GITHUB_OUTPUT
+                echo "$SUMMARY" >> $GITHUB_OUTPUT
+                echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Upload resume to Naukri
         uses: Prateek-Wayne/naukri-resume-action@v1.2.0
@@ -53,4 +55,3 @@ jobs:
           password: ${{ secrets.NAUKRI_PASSWORD_MAIN }}
           profile_id: ${{ secrets.NAUKRI_PROFILE_ID_MAIN }}
           resume_path: ./resumes/PRATEEK_RESUME.pdf
-          profile_summary: ${{ steps.ai_summary.outputs.response }}
