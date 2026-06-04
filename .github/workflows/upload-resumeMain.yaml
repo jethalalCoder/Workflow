@@ -17,18 +17,40 @@ on:
 jobs:
   upload-resume:
     runs-on: naukri-ec2
+    permissions:
+      models: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Upload resume to Naukri for Profile1
+      - name: Generate profile summary via AI
+        id: ai_summary
+        uses: actions/ai-inference@v1
+        with:
+          prompt: |
+            Write a professional Naukri profile summary for a Software Development Engineer.
+            Keep it under 2500 characters. Plain paragraph text only — no bullet points, no markdown, no special characters.
+
+            Candidate profile:
+            - Title: Software Development Engineer (SDE I) at Philips, ~3 years experience
+            - Domain: SaaS platform for hospital medical equipment tracking (Ultrasound Fleet Manager)
+            - Backend: Java, Spring Boot, Node.js, Express.js, TypeScript
+            - Frontend: React.js
+            - Cloud & Infra: AWS (EKS, EC2, S3, Secrets Manager), Kubernetes, Docker
+            - Observability: OpenTelemetry, Prometheus, Grafana
+            - CI/CD: GitHub Actions
+            - Strengths: REST APIs, microservices, caching, query optimization, distributed systems
+            - Certifications: AWS Certified Cloud Practitioner
+            - Open source: published npm plugin, contributor to 10K-star project (JSONCrack)
+            - Looking for: backend or full stack SDE roles
+
+            Write in first person, confident tone. Start with the role/experience line. End with what kind of opportunity they are seeking.
+
+      - name: Upload resume to Naukri
         uses: Prateek-Wayne/naukri-resume-action@v1.2.0
         with:
           username: ${{ secrets.NAUKRI_USERNAME_MAIN }}
           password: ${{ secrets.NAUKRI_PASSWORD_MAIN }}
           profile_id: ${{ secrets.NAUKRI_PROFILE_ID_MAIN }}
-          resume_path: |-
-            ./resumes/PRATEEK_RESUME.pdf
-          profile_summary: "Software Development Engineer with ~3 years of experience at Philips, working on building scalable, cloud-native applications and backend systems. Experienced in developing and optimizing REST APIs, working with microservices architecture, and improving system performance through caching, query optimization, and efficient design.
-                            Proficient in Java, Spring Boot, Node.js, and TypeScript, with hands-on experience in AWS (EKS, EC2, S3, Secrets Manager), Kubernetes, Docker, and CI/CD pipelines. Strong understanding of distributed systems, observability (OpenTelemetry, Prometheus, Grafana), and production-grade system design.
-                            Passionate about solving problems related to scalability, performance, and reliability. Currently seeking opportunities in backend or full stack development roles where I can contribute to building high-impact systems and continue growing as an engineer."
+          resume_path: ./resumes/PRATEEK_RESUME.pdf
+          profile_summary: ${{ steps.ai_summary.outputs.response }}
