@@ -27,7 +27,7 @@ jobs:
         with:
           prompt: |
             Write a professional Naukri profile summary for a Software Development Engineer.
-            Keep it between 80 and 150 words. Plain paragraph text only — no bullet points, no markdown, no special characters.
+            Keep it between 80 and 120 words stricly. Plain paragraph text only — no bullet points, no markdown, no special characters.
 
             Candidate profile:
             - Title: Software Development Engineer (SDE I) at Philips, ~3 years experience
@@ -51,7 +51,7 @@ jobs:
           WORD_COUNT=$(echo "$SUMMARY" | wc -w)
           echo "Word count: $WORD_COUNT"
 
-          if [ "$WORD_COUNT" -lt 50 ] || [ "$WORD_COUNT" -gt 1000 ]; then
+          if [ "$WORD_COUNT" -lt 50 ] || [ "$WORD_COUNT" -gt 800 ]; then
             echo "AI summary out of range ($WORD_COUNT words), using fallback."
             SUMMARY="Software Development Engineer with 3 years of experience at Philips, building scalable cloud-native applications and backend systems. Experienced in developing REST APIs, microservices architecture, and improving system performance through caching and query optimization. Proficient in Java, Spring Boot, Node.js, and TypeScript, with hands-on experience in AWS, Kubernetes, Docker, and CI/CD pipelines. Strong understanding of distributed systems and observability using OpenTelemetry, Prometheus, and Grafana. Published an npm plugin and contributed to a 10K-star open source project. Currently seeking backend or full stack SDE roles to build high-impact systems."
           fi
