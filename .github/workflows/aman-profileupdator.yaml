@@ -1,4 +1,4 @@
-name: Update Naukri Profile for AMAN
+name: AMAN_PROFILE_UPDATOR_WORKFLOW
 
 on:
   schedule:
@@ -66,5 +66,5 @@ jobs:
           username: ${{ secrets.AMAN_NAUKRI_EMAIL }}
           password: ${{ secrets.AMAN_NAUKRI_PASSWORD }}
           profile_id: ${{ secrets.AMAN_PROFILE_ID }}
-          resume_path: ./resumes/AmanChoudharyResume
+          resume_path: ./resumes/AmanChoudharyResume.pdf
           profile_summary: ${{ steps.final_summary.outputs.summary }}
