@@ -27,21 +27,20 @@ jobs:
         with:
           prompt: |
             Write a professional Naukri profile summary for a Software Development Engineer.
-            Keep it between 80 and 120 words stricly. Plain paragraph text only — no bullet points, no markdown, no special characters.
-
+            Keep it between 80 and 120 words strictly. Plain paragraph text only — no bullet points, no markdown, no special characters.
             Candidate profile:
-            - Title: Software Development Engineer  at Philips, 3 years experience
-            - Domain: SaaS platform for hospital medical equipment tracking (Ultrasound Fleet Manager) and backstage developer portal
-            - Backend: Java, Spring Boot, Node.js, Express.js, TypeScript,Kafka ,Redis,Postgress,MongoDb
-            - Frontend: React.js
-            - Cloud & Infra: AWS (EKS, EC2, S3, Secrets Manager,Lambda), Kubernetes, Docker
-            - Observability: OpenTelemetry, Prometheus, Grafana
+            - Title: Software Development Engineer at Philips, 3+ years experience
+            - Domain: SaaS platform for hospital medical equipment tracking (Ultrasound Fleet Manager) and Backstage internal developer portal
+            - Backend: Java, Spring Boot, Node.js, Express.js, TypeScript, Kafka, Redis, PostgreSQL, MongoDB, Java EE, JVM
+            - Frontend: React.js, Micro Frontends (Module Federation), Webpack, Vite
+            - Cloud & Infra: AWS (EKS, ECR, S3, Secrets Manager), Kubernetes, Docker, Helm, Crossplane
+            - Observability: OpenTelemetry, Prometheus, Grafana, AWS CloudWatch, Distributed Tracing
             - CI/CD: GitHub Actions
-            - Strengths: REST APIs, microservices, caching, query optimization, distributed systems
+            - Strengths: REST APIs, microservices, developer platform engineering, search indexing pipelines, self-serve automation, caching, query optimization, distributed systems
+            - Key achievements: Built PGN network onboarding automation reducing effort by 95% across 1000+ services; built org-wide Confluence search plugin on Elasticsearch; architected observability platform cutting production diagnosis time
             - Certifications: AWS Certified Cloud Practitioner
-            - Open source: published npm plugin, contributor to 10K-star project (JSONCrack)
-            - Looking for: backend or full stack SDE roles
-
+            - Open source: published npm Backstage plugin, contributor to 10K-star project (JSONCrack), LeetCode Top 15%
+            - Looking for: backend, full stack, or developer platform SDE roles
             Write in first person, confident tone. Start with the role/experience line. End with what kind of opportunity they are seeking.
 
       - name: Validate and fallback summary
