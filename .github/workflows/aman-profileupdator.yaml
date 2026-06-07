@@ -27,18 +27,28 @@ jobs:
         with:
           prompt: |
             Write a professional Naukri profile summary for a Software Development Engineer.
-            Keep it between 80 and 120 words stricly. Plain paragraph text only — no bullet points, no markdown, no special characters.
+            Keep it between 80 and 120 words strictly. Plain paragraph text only — no bullet points, no markdown, no special characters.
 
             Candidate profile:
-            Software Development Engineer at Philips Healthcare with 3 years of experience building scalable backend systems for medical device fleet management.
-            Currently working on a cloud-based IoT platform that enables centralized monitoring and configuration management of 100+ MRI scanners deployed across hospitals — replacing manual field engineer interventions with automated, event-driven microservices.
-            My day-to-day involves:
-            • Designing and building Java/Spring Boot microservices with event-driven architecture (Kafka)
-            • Implementing real-time monitoring systems with Redis, WebSocket, and custom alerting
-            • Working with AWS cloud services (EKS, RDS, ElastiCache, S3) for production deployments
-            • Writing clean, tested code with 85%+ coverage (JUnit 5, Mockito, Testcontainers)
-            • Collaborating in cross-functional Agile teams on architecture decisions and code reviews
-            Tech Stack: Java | Spring Boot 3.x | Apache Kafka | Redis | PostgreSQL | Docker | Kubernetes | AWS | GitHub Actions
+            - Name: Aman Choudhary
+            - Role: Software Development Engineer at Philips Healthcare, 3 years experience
+            - Education: B.Tech in Computer Science from Lovely Professional University (CGPA 8.08/10)
+            - Current work: Building cloud-based fleet management platform for centralized monitoring and configuration of 100+ MRI scanners across hospitals
+            - Key achievements:
+              • Owned Config Transfer Service — designed config export/import pipeline using Strategy Pattern for 8+ file types, reducing field engineer intervention by 60%
+              • Built Fleet Health Service with real-time heartbeat monitoring via WebSocket (STOMP) and Redis TTL-based offline detection
+              • Designed event-driven architecture using Apache Kafka with idempotent producers and Dead Letter Topics
+              • Reduced API response time from 120ms to 15ms using Redis caching for session validation and machine metadata
+              • Implemented Spring Security + JWT with role-based access and HIPAA-compliant audit logging
+              • Containerized services with Docker, deployed on AWS EKS with Helm charts and HPA auto-scaling
+              • Set up observability with Micrometer + Prometheus + Grafana dashboards
+            - As intern: Built automated MRI scanner deployment framework reducing manual setup time by 70% across 50+ hospitals, implemented multi-threaded parallel processing improving throughput by 50%
+            - Backend: Java, Spring Boot, Spring MVC, Spring Data JPA, Spring Security (JWT/OAuth2), Hibernate, MapStruct, WebSocket (STOMP)
+            - Databases: PostgreSQL, Redis (ElastiCache), Flyway Migrations
+            - Messaging: Apache Kafka, Event-Driven Architecture, Strategy Pattern, Saga (Choreography)
+            - Cloud & DevOps: AWS (EKS, RDS, ElastiCache, S3, CloudWatch, IAM), Docker, Kubernetes, Helm, GitHub Actions, SonarQube
+            - Observability: Micrometer, Prometheus, Grafana, Structured JSON Logging
+            - Looking for: Backend or Full Stack SDE roles in distributed systems, cloud-native platforms, or IoT
 
             Write in first person, confident tone. Start with the role/experience line. End with what kind of opportunity they are seeking.
 
@@ -51,7 +61,7 @@ jobs:
 
           if [ "$WORD_COUNT" -lt 50 ] || [ "$WORD_COUNT" -gt 800 ]; then
             echo "AI summary out of range ($WORD_COUNT words), using fallback."
-            SUMMARY="Software Development Engineer with 3 years of experience at Philips, building scalable cloud-native applications and backend systems. Experienced in developing REST APIs, microservices architecture, and improving system performance through caching and query optimization. Proficient in Java, Spring Boot, Node.js, and TypeScript, with hands-on experience in AWS, Kubernetes, Docker, and CI/CD pipelines. Strong understanding of distributed systems and observability using OpenTelemetry, Prometheus, and Grafana. Published an npm plugin and contributed to a 10K-star open source project. Currently seeking backend or full stack SDE roles to build high-impact systems."
+            SUMMARY="Software Development Engineer with 3 years of experience at Philips Healthcare, building scalable backend services for medical device fleet management. Proficient in Java and Spring Boot microservices with event-driven architecture using Apache Kafka. Currently building a cloud-based fleet management platform for centralized monitoring of 100+ MRI scanners across hospitals. Experienced in Redis caching, WebSocket real-time monitoring, Spring Security with JWT, and HIPAA-compliant audit logging. Skilled in containerized deployments on AWS EKS with Docker, Kubernetes, and Helm. Strong focus on observability using Prometheus and Grafana. Seeking backend or full stack SDE roles in distributed systems and cloud-native platforms."
           fi
 
           echo "summary<<EOF" >> $GITHUB_OUTPUT
@@ -66,12 +76,17 @@ jobs:
             Write a professional Naukri resume headline for a Software Development Engineer.
             It must be a single line, maximum 250 characters, no special characters or quotes.
             Candidate profile:
-            - Title: Software Development Engineer at Philips Healthcare, 3+ years experience
-            - Skills: Java, Spring Boot, Kafka, Redis, PostgreSQL, Docker, Kubernetes, AWS
-            - Domain: Cloud-based IoT platform, medical device fleet management, microservices
-            - Certifications: AWS Certified Cloud Practitioner
-            Write a concise, keyword-rich headline that recruiters search for. Example format:
-            "SDE | Java | Spring Boot | AWS | Microservices | 3+ Years"
+            - Title: Software Development Engineer at Philips Healthcare, 3 years experience
+            - Backend: Java, Spring Boot, Spring Security, Hibernate, JPA, WebSocket
+            - Messaging: Apache Kafka, Event-Driven Architecture
+            - Databases: PostgreSQL, Redis
+            - Cloud & DevOps: AWS (EKS, RDS, ElastiCache, S3), Docker, Kubernetes, Helm, GitHub Actions
+            - Observability: Prometheus, Grafana, Micrometer
+            - Domain: Healthcare IoT platform, MRI scanner fleet management, HIPAA-compliant systems
+            - Key highlights: Reduced API latency from 120ms to 15ms, reduced field engineer intervention by 60%, 85%+ code coverage
+            Write a concise, keyword-rich headline that recruiters search for. Vary the format each time. Example formats:
+            "SDE | Java | Spring Boot | Kafka | AWS | Microservices | 3 Years"
+            "Backend Engineer | Java Spring Boot | Kafka | Redis | AWS EKS | Healthcare IoT"
 
       - name: Validate and fallback headline
         id: final_headline
@@ -83,7 +98,7 @@ jobs:
 
           if [ "$CHAR_COUNT" -lt 10 ] || [ "$CHAR_COUNT" -gt 250 ]; then
             echo "AI headline out of range ($CHAR_COUNT chars), using fallback."
-            HEADLINE="Software Development Engineer | Java | Spring Boot | Kafka | AWS | Kubernetes | Microservices | 3+ Years"
+            HEADLINE="Software Development Engineer | Java | Spring Boot | Kafka | Redis | AWS EKS | Kubernetes | Docker | PostgreSQL | Healthcare IoT | 3 Years"
           fi
 
           echo "headline<<EOF" >> $GITHUB_OUTPUT
