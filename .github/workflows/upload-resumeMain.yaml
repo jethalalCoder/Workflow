@@ -1,4 +1,4 @@
-name: AMAN_PROFILE_UPDATOR_WORKFLOW
+name: PRATEEK_RESUME_UPDATOR
 
 on:
   schedule:
