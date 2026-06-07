@@ -27,7 +27,7 @@ jobs:
         with:
           prompt: |
             Write a professional Naukri profile summary for a Software Development Engineer.
-            Keep it strictly between 900 and 1000 characters (including spaces). Plain paragraph text only — no bullet points, no markdown, no special characters.
+            Keep it strictly 80 and 120 words (including spaces). Plain paragraph text only — no bullet points, no markdown, no special characters.
             You MUST include at least one specific metric achievement. Avoid generic phrases like "passionate", "innovative", or "complex challenges".
             Rotate focus each time — sometimes emphasize backend, sometimes full stack, sometimes developer platform engineering.
 
