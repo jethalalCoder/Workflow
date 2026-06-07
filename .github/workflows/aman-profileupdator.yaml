@@ -75,8 +75,9 @@ jobs:
 
       - name: Validate and fallback headline
         id: final_headline
+        env:
+          HEADLINE: ${{ steps.ai_headline.outputs.response }}
         run: |
-          HEADLINE="${{ steps.ai_headline.outputs.response }}"
           CHAR_COUNT=${#HEADLINE}
           echo "Character count: $CHAR_COUNT"
 
