@@ -57,53 +57,42 @@ jobs:
           echo "summary<<EOF" >> $GITHUB_OUTPUT
           echo "$SUMMARY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Generate resume headline via AI
-        id: ai_headline
+          
+      - name: Generate profile summary via AI
+        id: ai_summary
         uses: actions/ai-inference@v1
         with:
-            prompt: |
-              Write a professional Naukri resume headline for a Software Development Engineer.
-              It must be a single line, maximum 250 characters, no special characters, no quotes, no markdown.
-              Rotate focus each time — sometimes emphasize backend, sometimes full stack, sometimes platform/developer tooling.
-              Candidate profile:
-              - Title: Software Development Engineer at Philips, 3+ years experience
-              - Backend: Java, Spring Boot, Node.js, Express.js, Kafka, Redis, PostgreSQL, MongoDB, JVM, Java EE
-              - Frontend: React.js, TypeScript, Micro Frontends
-              - Cloud & Infra: AWS (EKS, S3, Secrets Manager), Kubernetes, Docker, Helm
-              - Observability: OpenTelemetry, Prometheus, Grafana, AWS CloudWatch
-              - Platform: Backstage, search indexing pipelines, self-serve developer automation
-              - Certifications: AWS Certified Cloud Practitioner
-              - Strengths: Microservices, distributed systems, REST APIs, developer platform engineering
-              Format: "Role | Skill | Skill | Skill | Skill | Experience"
-              Example: "SDE | Java | Spring Boot | Backstage | AWS | 3+ Years"
-              Return only the headline, nothing else.
+          prompt: |
+            Write a professional Naukri profile summary for a Software Development Engineer.
+            Keep it between 80 and 120 words stricly. Plain paragraph text only — no bullet points, no markdown, no special characters.
 
-      - name: Validate and fallback headline
-        id: final_headline
-        env:
-          HEADLINE: ${{ steps.ai_headline.outputs.response }}
+            Candidate profile:
+            Software Development Engineer at Philips Healthcare with 3 years of experience building scalable backend systems for medical device fleet management.
+            Currently working on a cloud-based IoT platform that enables centralized monitoring and configuration management of 100+ MRI scanners deployed across hospitals — replacing manual field engineer interventions with automated, event-driven microservices.
+            My day-to-day involves:
+            • Designing and building Java/Spring Boot microservices with event-driven architecture (Kafka)
+            • Implementing real-time monitoring systems with Redis, WebSocket, and custom alerting
+            • Working with AWS cloud services (EKS, RDS, ElastiCache, S3) for production deployments
+            • Writing clean, tested code with 85%+ coverage (JUnit 5, Mockito, Testcontainers)
+            • Collaborating in cross-functional Agile teams on architecture decisions and code reviews
+            Tech Stack: Java | Spring Boot 3.x | Apache Kafka | Redis | PostgreSQL | Docker | Kubernetes | AWS | GitHub Actions
+
+            Write in first person, confident tone. Start with the role/experience line. End with what kind of opportunity they are seeking.
+
+      - name: Validate and fallback summary
+        id: final_summary
         run: |
-          CHAR_COUNT=${#HEADLINE}
-          echo "Character count: $CHAR_COUNT"
+          SUMMARY="${{ steps.ai_summary.outputs.response }}"
+          WORD_COUNT=$(echo "$SUMMARY" | wc -w)
+          echo "Word count: $WORD_COUNT"
 
-          if [ "$CHAR_COUNT" -lt 10 ] || [ "$CHAR_COUNT" -gt 250 ]; then
-            echo "AI headline out of range ($CHAR_COUNT chars), using fallback."
-            # Rotate fallback headline based on day of week
-            DAY=$(date +%u)
-            case $DAY in
-              1) HEADLINE="SDE | Java | Spring Boot | Backstage | AWS | 3+ Years" ;;
-              2) HEADLINE="Full Stack Engineer | Java | React.js | Microservices | Kubernetes | AWS" ;;
-              3) HEADLINE="Backend Engineer | Spring Boot | Node.js | Kafka | Distributed Systems | AWS" ;;
-              4) HEADLINE="Platform Engineer | Backstage | Java | Observability | OpenTelemetry | AWS" ;;
-              5) HEADLINE="SDE | Java | React.js | Cloud Native | AWS Certified | 3+ Years" ;;
-              6) HEADLINE="Full Stack SDE | Spring Boot | Node.js | Kafka | Kubernetes | Helm" ;;
-              7) HEADLINE="Backend & Platform Engineer | Java | Backstage | Prometheus | AWS | 3+ Years" ;;
-            esac
+          if [ "$WORD_COUNT" -lt 50 ] || [ "$WORD_COUNT" -gt 800 ]; then
+            echo "AI summary out of range ($WORD_COUNT words), using fallback."
+            SUMMARY="Software Development Engineer with 3 years of experience at Philips, building scalable cloud-native applications and backend systems. Experienced in developing REST APIs, microservices architecture, and improving system performance through caching and query optimization. Proficient in Java, Spring Boot, Node.js, and TypeScript, with hands-on experience in AWS, Kubernetes, Docker, and CI/CD pipelines. Strong understanding of distributed systems and observability using OpenTelemetry, Prometheus, and Grafana. Published an npm plugin and contributed to a 10K-star open source project. Currently seeking backend or full stack SDE roles to build high-impact systems."
           fi
 
-          echo "headline<<EOF" >> $GITHUB_OUTPUT
-          echo "$HEADLINE" >> $GITHUB_OUTPUT
+          echo "summary<<EOF" >> $GITHUB_OUTPUT
+          echo "$SUMMARY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Upload resume to Naukri
