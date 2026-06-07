@@ -58,11 +58,43 @@ jobs:
           echo "$SUMMARY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Generate resume headline via AI
+        id: ai_headline
+        uses: actions/ai-inference@v1
+        with:
+          prompt: |
+            Write a professional Naukri resume headline for a Software Development Engineer.
+            It must be a single line, maximum 250 characters, no special characters or quotes.
+            Candidate profile:
+            - Title: Software Development Engineer at Philips Healthcare, 3+ years experience
+            - Skills: Java, Spring Boot, Kafka, Redis, PostgreSQL, Docker, Kubernetes, AWS
+            - Domain: Cloud-based IoT platform, medical device fleet management, microservices
+            - Certifications: AWS Certified Cloud Practitioner
+            Write a concise, keyword-rich headline that recruiters search for. Example format:
+            "SDE | Java | Spring Boot | AWS | Microservices | 3+ Years"
+
+      - name: Validate and fallback headline
+        id: final_headline
+        run: |
+          HEADLINE="${{ steps.ai_headline.outputs.response }}"
+          CHAR_COUNT=${#HEADLINE}
+          echo "Character count: $CHAR_COUNT"
+
+          if [ "$CHAR_COUNT" -lt 10 ] || [ "$CHAR_COUNT" -gt 250 ]; then
+            echo "AI headline out of range ($CHAR_COUNT chars), using fallback."
+            HEADLINE="Software Development Engineer | Java | Spring Boot | Kafka | AWS | Kubernetes | Microservices | 3+ Years"
+          fi
+
+          echo "headline<<EOF" >> $GITHUB_OUTPUT
+          echo "$HEADLINE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Upload resume to Naukri
-        uses: Prateek-Wayne/naukri-resume-action@v1.2.0
+        uses: amanc8423/naukri-resume-action@feature/add-resume-headline
         with:
           username: ${{ secrets.AMAN_NAUKRI_EMAIL }}
           password: ${{ secrets.AMAN_NAUKRI_PASSWORD }}
           profile_id: ${{ secrets.AMAN_PROFILE_ID }}
           resume_path: ./resumes/AmanChoudharyResume.pdf
           profile_summary: ${{ steps.final_summary.outputs.summary }}
+          resume_headline: ${{ steps.final_headline.outputs.headline }}
