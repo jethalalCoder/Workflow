@@ -1,15 +1,15 @@
-name: Update Naukri Resume for ProfileMAIN
+name: AMAN_PROFILE_UPDATOR_WORKFLOW
 
 on:
   schedule:
-    - cron: '43 2 * * *'   # 8:13 AM
-    - cron: '43 4 * * *'   # 10:13 AM
-    - cron: '43 6 * * *'   # 12:13 PM
-    - cron: '43 8 * * *'   # 2:13 PM
-    - cron: '43 10 * * *'  # 4:13 PM
-    - cron: '43 12 * * *'  # 6:13 PM
-    - cron: '43 14 * * *'  # 8:13 PM
-    - cron: '43 16 * * *'  # 10:13 PM
+    - cron: '29 3 * * *'   
+    - cron: '29 5 * * *'   # 10:13 AM
+    - cron: '29 7 * * *'   # 12:13 PM
+    - cron: '29 9 * * *'   # 2:13 PM
+    - cron: '29 11 * * *'  # 4:13 PM
+    - cron: '29 13 * * *'  # 6:13 PM
+    - cron: '29 15 * * *'  # 8:13 PM
+    - cron: '29 17 * * *'  # 10:13 PM
   workflow_dispatch:
 
 jobs:
@@ -27,20 +27,19 @@ jobs:
         with:
           prompt: |
             Write a professional Naukri profile summary for a Software Development Engineer.
-            Keep it between 80 and 120 words strictly. Plain paragraph text only — no bullet points, no markdown, no special characters.
+            Keep it between 80 and 120 words stricly. Plain paragraph text only — no bullet points, no markdown, no special characters.
+
             Candidate profile:
-            - Title: Software Development Engineer at Philips, 3+ years experience
-            - Domain: SaaS platform for hospital medical equipment tracking (Ultrasound Fleet Manager) and Backstage internal developer portal
-            - Backend: Java, Spring Boot, Node.js, Express.js, TypeScript, Kafka, Redis, PostgreSQL, MongoDB, Java EE, JVM
-            - Frontend: React.js, Micro Frontends (Module Federation), Webpack, Vite
-            - Cloud & Infra: AWS (EKS, ECR, S3, Secrets Manager), Kubernetes, Docker, Helm, Crossplane
-            - Observability: OpenTelemetry, Prometheus, Grafana, AWS CloudWatch, Distributed Tracing
-            - CI/CD: GitHub Actions
-            - Strengths: REST APIs, microservices, developer platform engineering, search indexing pipelines, self-serve automation, caching, query optimization, distributed systems
-            - Key achievements: Built PGN network onboarding automation reducing effort by 95% across 1000+ services; built org-wide Confluence search plugin on Elasticsearch; architected observability platform cutting production diagnosis time
-            - Certifications: AWS Certified Cloud Practitioner
-            - Open source: published npm Backstage plugin, contributor to 10K-star project (JSONCrack), LeetCode Top 15%
-            - Looking for: backend, full stack, or developer platform SDE roles
+            Software Development Engineer at Philips Healthcare with 3 years of experience building scalable backend systems for medical device fleet management.
+            Currently working on a cloud-based IoT platform that enables centralized monitoring and configuration management of 100+ MRI scanners deployed across hospitals — replacing manual field engineer interventions with automated, event-driven microservices.
+            My day-to-day involves:
+            • Designing and building Java/Spring Boot microservices with event-driven architecture (Kafka)
+            • Implementing real-time monitoring systems with Redis, WebSocket, and custom alerting
+            • Working with AWS cloud services (EKS, RDS, ElastiCache, S3) for production deployments
+            • Writing clean, tested code with 85%+ coverage (JUnit 5, Mockito, Testcontainers)
+            • Collaborating in cross-functional Agile teams on architecture decisions and code reviews
+            Tech Stack: Java | Spring Boot 3.x | Apache Kafka | Redis | PostgreSQL | Docker | Kubernetes | AWS | GitHub Actions
+
             Write in first person, confident tone. Start with the role/experience line. End with what kind of opportunity they are seeking.
 
       - name: Validate and fallback summary
@@ -59,11 +58,60 @@ jobs:
           echo "$SUMMARY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Upload resume to Naukri
-        uses: Prateek-Wayne/naukri-resume-action@v1.2.0
+      - name: Generate resume headline via AI
+        id: ai_headline
+        uses: actions/ai-inference@v1
         with:
-          username: ${{ secrets.NAUKRI_USERNAME_MAIN }}
-          password: ${{ secrets.NAUKRI_PASSWORD_MAIN }}
-          profile_id: ${{ secrets.NAUKRI_PROFILE_ID_MAIN }}
-          resume_path: ./resumes/PRATEEK_RESUME.pdf
+            prompt: |
+              Write a professional Naukri resume headline for a Software Development Engineer.
+              It must be a single line, maximum 250 characters, no special characters, no quotes, no markdown.
+              Rotate focus each time — sometimes emphasize backend, sometimes full stack, sometimes platform/developer tooling.
+              Candidate profile:
+              - Title: Software Development Engineer at Philips, 3+ years experience
+              - Backend: Java, Spring Boot, Node.js, Express.js, Kafka, Redis, PostgreSQL, MongoDB, JVM, Java EE
+              - Frontend: React.js, TypeScript, Micro Frontends
+              - Cloud & Infra: AWS (EKS, S3, Secrets Manager), Kubernetes, Docker, Helm
+              - Observability: OpenTelemetry, Prometheus, Grafana, AWS CloudWatch
+              - Platform: Backstage, search indexing pipelines, self-serve developer automation
+              - Certifications: AWS Certified Cloud Practitioner
+              - Strengths: Microservices, distributed systems, REST APIs, developer platform engineering
+              Format: "Role | Skill | Skill | Skill | Skill | Experience"
+              Example: "SDE | Java | Spring Boot | Backstage | AWS | 3+ Years"
+              Return only the headline, nothing else.
+
+      - name: Validate and fallback headline
+        id: final_headline
+        env:
+          HEADLINE: ${{ steps.ai_headline.outputs.response }}
+        run: |
+          CHAR_COUNT=${#HEADLINE}
+          echo "Character count: $CHAR_COUNT"
+
+          if [ "$CHAR_COUNT" -lt 10 ] || [ "$CHAR_COUNT" -gt 250 ]; then
+            echo "AI headline out of range ($CHAR_COUNT chars), using fallback."
+            # Rotate fallback headline based on day of week
+            DAY=$(date +%u)
+            case $DAY in
+              1) HEADLINE="SDE | Java | Spring Boot | Backstage | AWS | 3+ Years" ;;
+              2) HEADLINE="Full Stack Engineer | Java | React.js | Microservices | Kubernetes | AWS" ;;
+              3) HEADLINE="Backend Engineer | Spring Boot | Node.js | Kafka | Distributed Systems | AWS" ;;
+              4) HEADLINE="Platform Engineer | Backstage | Java | Observability | OpenTelemetry | AWS" ;;
+              5) HEADLINE="SDE | Java | React.js | Cloud Native | AWS Certified | 3+ Years" ;;
+              6) HEADLINE="Full Stack SDE | Spring Boot | Node.js | Kafka | Kubernetes | Helm" ;;
+              7) HEADLINE="Backend & Platform Engineer | Java | Backstage | Prometheus | AWS | 3+ Years" ;;
+            esac
+          fi
+
+          echo "headline<<EOF" >> $GITHUB_OUTPUT
+          echo "$HEADLINE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Upload resume to Naukri
+        uses: Prateek-Wayne/naukri-resume-action@v1.3.0
+        with:
+          username: ${{ secrets.AMAN_NAUKRI_EMAIL }}
+          password: ${{ secrets.AMAN_NAUKRI_PASSWORD }}
+          profile_id: ${{ secrets.AMAN_PROFILE_ID }}
+          resume_path: ./resumes/AmanChoudharyResume.pdf
           profile_summary: ${{ steps.final_summary.outputs.summary }}
+          resume_headline: ${{ steps.final_headline.outputs.headline }}
