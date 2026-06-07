@@ -105,9 +105,9 @@ jobs:
       - name: Upload resume to Naukri
         uses: Prateek-Wayne/naukri-resume-action@v1.3.1
         with:
-          username: ${{ secrets.AMAN_NAUKRI_EMAIL }}
-          password: ${{ secrets.AMAN_NAUKRI_PASSWORD }}
-          profile_id: ${{ secrets.AMAN_PROFILE_ID }}
-          resume_path: ./resumes/AmanChoudharyResume.pdf
+          username: ${{ secrets.NAUKRI_USERNAME_MAIN }}
+          password: ${{ secrets.NAUKRI_PASSWORD_MAIN }}
+          profile_id: ${{ secrets.NAUKRI_PROFILE_ID_MAIN }}
+          resume_path: ./resumes/PRATEEK_RESUME.pdf
           profile_summary: ${{ steps.final_summary.outputs.summary }}
           resume_headline: ${{ steps.final_headline.outputs.headline }}
