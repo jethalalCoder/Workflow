@@ -2,14 +2,16 @@ name: PRATEEK_RESUME_UPDATOR
 
 on:
   schedule:
-    - cron: '29 3 * * *'   
-    - cron: '29 5 * * *'   # 10:13 AM
-    - cron: '29 7 * * *'   # 12:13 PM
-    - cron: '29 9 * * *'   # 2:13 PM
-    - cron: '29 11 * * *'  # 4:13 PM
-    - cron: '29 13 * * *'  # 6:13 PM
-    - cron: '29 15 * * *'  # 8:13 PM
-    - cron: '29 17 * * *'  # 10:13 PM
+    - cron: '0 3 * * *'  # 3:00 AM
+    - cron: '0 5 * * *'  # 5:00 AM
+    # - cron: '29 3 * * *'   
+    # - cron: '29 5 * * *'   # 10:13 AM
+    # - cron: '29 7 * * *'   # 12:13 PM
+    # - cron: '29 9 * * *'   # 2:13 PM
+    # - cron: '29 11 * * *'  # 4:13 PM
+    # - cron: '29 13 * * *'  # 6:13 PM
+    # - cron: '29 15 * * *'  # 8:13 PM
+    # - cron: '29 17 * * *'  # 10:13 PM
   workflow_dispatch:
 
 jobs:
