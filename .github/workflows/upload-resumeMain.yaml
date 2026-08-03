@@ -2,16 +2,13 @@ name: PRATEEK_RESUME_UPDATOR
 
 on:
   schedule:
-    - cron: '0 3 * * *' # 3:00 AM
-    - cron: '0 5 * * *' # 5:00 AM
-    # - cron: '29 3 * * *'
-    # - cron: '29 5 * * *'   # 10:13 AM
-    # - cron: '29 7 * * *'   # 12:13 PM
-    # - cron: '29 9 * * *'   # 2:13 PM
-    # - cron: '29 11 * * *'  # 4:13 PM
-    # - cron: '29 13 * * *'  # 6:13 PM
-    # - cron: '29 15 * * *'  # 8:13 PM
-    # - cron: '29 17 * * *'  # 10:13 PM
+    # GitHub cron runs in UTC. Times noted are IST equivalents (UTC + 5:30),
+    # spread across peak recruiter hours so the profile stays fresh through the day.
+    - cron: '0 4 * * *' # 09:30 IST
+    - cron: '30 6 * * *' # 12:00 IST
+    - cron: '0 9 * * *' # 14:30 IST
+    - cron: '30 11 * * *' # 17:00 IST
+    - cron: '30 13 * * *' # 19:00 IST
   workflow_dispatch:
 
 jobs:
@@ -29,7 +26,8 @@ jobs:
         with:
           prompt: |
             Write a professional Naukri profile summary for a Software Development Engineer.
-            Keep it strictly 80 and 120 words (including spaces). Plain paragraph text only — no bullet points, no markdown, no special characters.
+            Keep it between 80 and 120 words (including spaces). Plain paragraph text only — no bullet points, no markdown, no special characters.
+            Naturally weave in the most in-demand skills (Java, Spring Boot, Microservices, REST APIs, AWS, Kubernetes, Kafka) so the profile matches more recruiter searches.
             You MUST include at least one specific metric achievement. Avoid generic phrases like "passionate", "innovative", or "complex challenges".
             Rotate focus each time — sometimes emphasize backend, sometimes full stack, sometimes developer platform engineering.
 
@@ -49,6 +47,7 @@ jobs:
           model: llama-3.3-70b-versatile
           endpoint: https://api.groq.com/openai/v1
           token: ${{ secrets.GROQ_API_SECRET }}
+          max-tokens: 500
 
       - name: Validate and fallback summary
         id: final_summary
@@ -73,7 +72,8 @@ jobs:
           prompt: |
             Write a professional Naukri resume headline for a Software Development Engineer.
             It must be a single line, maximum 250 characters, no special characters, no quotes, no markdown.
-            Rotate focus each time — sometimes emphasize backend, sometimes full stack, sometimes platform/developer tooling.
+            Always keep these core keywords in every headline: Java, Spring Boot, Microservices, AWS, Kubernetes.
+            You may rotate only the trailing/secondary emphasis (e.g. React, Node.js, Backstage, Kafka) — never drop the core keywords.
 
             Candidate profile:
             - Title: Software Development Engineer II at Philips, 3+ years experience
