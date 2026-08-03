@@ -46,6 +46,9 @@ jobs:
             - Certifications: AWS Certified Cloud Practitioner
             - Open source: published npm Backstage plugin, contributor to 10K-star project (JSONCrack), LeetCode Top 15%
             - Looking for: backend, full stack, or developer platform SDE roles
+          model: llama-3.3-70b-versatile
+          endpoint: https://api.groq.com/openai/v1
+          token: ${{ secrets.GROQ_API_SECRET }}
 
       - name: Validate and fallback summary
         id: final_summary
@@ -85,6 +88,9 @@ jobs:
             Format: "Role | Skill | Skill | Skill | Skill | Experience"
             Example: "SDE II | Java | Spring Boot | Backstage | AWS | 3+ Years"
             Return only the headline, nothing else.
+          model: llama-3.3-70b-versatile
+          endpoint: https://api.groq.com/openai/v1
+          token: ${{ secrets.GROQ_API_SECRET }}
 
       - name: Validate and fallback headline
         id: final_headline
