@@ -30,17 +30,18 @@ jobs:
             Naturally weave in the most in-demand skills (Java, Spring Boot, Microservices, REST APIs, AWS, Kubernetes, Kafka) so the profile matches more recruiter searches.
             You MUST include at least one specific metric achievement. Avoid generic phrases like "passionate", "innovative", or "complex challenges".
             Rotate focus each time — sometimes emphasize backend, sometimes full stack, sometimes developer platform engineering.
+            Do NOT mention any industry or domain terms — no healthcare, hospital, medical, ultrasound, diagnostic, clinical, equipment, or fleet. This is a pure software engineering profile: focus only on software skills, systems, and measurable technical impact.
 
             Candidate profile:
             - Title: Software Development Engineer II at Philips, 3+ years experience
-            - Domain: SaaS platform for hospital medical equipment tracking (Ultrasound Fleet Manager) and Backstage internal developer portal
+            - Domain: enterprise cloud-native SaaS platform and Backstage internal developer portal
             - Backend: Java, Spring Boot, Node.js, Express.js, TypeScript, Kafka, Redis, PostgreSQL, MongoDB, Java EE, JVM
             - Frontend: React.js, Micro Frontends (Module Federation), Webpack, Vite
             - Cloud & Infra: AWS (EKS, ECR, S3, Secrets Manager), Kubernetes, Docker, Helm, Crossplane
             - Observability: OpenTelemetry, Prometheus, Grafana, AWS CloudWatch, Distributed Tracing
             - CI/CD: GitHub Actions
             - Strengths: REST APIs, microservices, developer platform engineering, search indexing pipelines, self-serve automation, caching, query optimization, distributed systems
-            - Key achievements: Took end-to-end ownership of deployment infrastructure (Kubernetes, Helm, CI/CD) for Ultrasound Fleet Manager; designed real-time session management using WebSocket keep-alive/heartbeat with automatic idle-logout detection; built PGN network onboarding automation reducing effort by 95% across 1,000+ services; built org-wide, search-backend-agnostic Confluence search plugin via Backstage; architected observability platform cutting production diagnosis time from hours to minutes
+            - Key achievements: Took end-to-end ownership of deployment infrastructure (Kubernetes, Helm, CI/CD) for a cloud-native SaaS platform; designed real-time session management using WebSocket keep-alive/heartbeat with automatic idle-logout detection; built internal network onboarding automation reducing effort by 95% across 1,000+ services; built org-wide, search-backend-agnostic Confluence search plugin via Backstage; architected observability platform cutting production diagnosis time from hours to minutes
             - Certifications: AWS Certified Cloud Practitioner
             - Open source: published npm Backstage plugin, contributor to 10K-star project (JSONCrack), LeetCode Top 15%
             - Looking for: backend, full stack, or developer platform SDE roles
@@ -56,8 +57,11 @@ jobs:
           WORD_COUNT=$(echo "$SUMMARY" | wc -w)
           echo "Word count: $WORD_COUNT"
 
-          if [ "$WORD_COUNT" -lt 50 ] || [ "$WORD_COUNT" -gt 800 ]; then
-            echo "AI summary out of range ($WORD_COUNT words), using fallback."
+          # Reject medical/domain keywords that misclassify the profile in Naukri recruiter search.
+          BANNED='ultrasound|medical|hospital|diagnostic|healthcare|clinical|fleet'
+
+          if [ "$WORD_COUNT" -lt 50 ] || [ "$WORD_COUNT" -gt 800 ] || echo "$SUMMARY" | grep -iqE "$BANNED"; then
+            echo "AI summary invalid (out of range or banned keyword), using fallback."
             SUMMARY="Software Development Engineer II with 3+ years of experience at Philips, building scalable cloud-native applications and backend systems. Experienced in developing REST APIs, microservices architecture, and improving system performance through caching and query optimization. Proficient in Java, Spring Boot, Node.js, and TypeScript, with hands-on experience in AWS, Kubernetes, Docker, and CI/CD pipelines. Strong understanding of distributed systems and observability using OpenTelemetry, Prometheus, and Grafana. Published an npm plugin and contributed to a 10K-star open source project. Currently seeking backend or full stack SDE roles to build high-impact systems."
           fi
 
@@ -74,6 +78,7 @@ jobs:
             It must be a single line, maximum 250 characters, no special characters, no quotes, no markdown.
             Always keep these core keywords in every headline: Java, Spring Boot, Microservices, AWS, Kubernetes.
             You may rotate only the trailing/secondary emphasis (e.g. React, Node.js, Backstage, Kafka) — never drop the core keywords.
+            Do NOT mention any industry or domain terms — no healthcare, hospital, medical, ultrasound, diagnostic, clinical, equipment, or fleet.
 
             Candidate profile:
             - Title: Software Development Engineer II at Philips, 3+ years experience
@@ -100,8 +105,11 @@ jobs:
           CHAR_COUNT=${#HEADLINE}
           echo "Character count: $CHAR_COUNT"
 
-          if [ "$CHAR_COUNT" -lt 10 ] || [ "$CHAR_COUNT" -gt 250 ]; then
-            echo "AI headline out of range ($CHAR_COUNT chars), using fallback."
+          # Reject medical/domain keywords that misclassify the profile in Naukri recruiter search.
+          BANNED='ultrasound|medical|hospital|diagnostic|healthcare|clinical|fleet'
+
+          if [ "$CHAR_COUNT" -lt 10 ] || [ "$CHAR_COUNT" -gt 250 ] || echo "$HEADLINE" | grep -iqE "$BANNED"; then
+            echo "AI headline invalid (out of range or banned keyword), using fallback."
             HEADLINE="Software Development Engineer II | Java | Spring Boot | Kafka | AWS | Kubernetes | Microservices | 3+ Years"
           fi
 
