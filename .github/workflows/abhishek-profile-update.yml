@@ -33,18 +33,17 @@ jobs:
             Do NOT mention any industry or domain terms — no healthcare, hospital, medical, ultrasound, diagnostic, clinical, equipment, or fleet. This is a pure software engineering profile: focus only on software skills, systems, and measurable technical impact.
 
             Candidate profile:
-            - Title: Software Development Engineer II at Philips, 3+ years experience
-            - Domain: enterprise cloud-native SaaS platform and Backstage internal developer portal
-            - Backend: Java, Spring Boot, Node.js, Express.js, TypeScript, Kafka, Redis, PostgreSQL, MongoDB, Java EE, JVM
+            - Title: Software Development Engineer I at Philips, 2+ years experience
+            - Domain: enterprise cloud-native SaaS platform
+            - Backend: Java, Spring Boot, Node.js, Express.js, Kafka, Redis, PostgreSQL, MongoDB
             - Frontend: React.js, Micro Frontends (Module Federation), Webpack, Vite
             - Cloud & Infra: AWS (EKS, ECR, S3, Secrets Manager), Kubernetes, Docker, Helm, Crossplane
             - Observability: OpenTelemetry, Prometheus, Grafana, AWS CloudWatch, Distributed Tracing
             - CI/CD: GitHub Actions
             - Strengths: REST APIs, microservices, developer platform engineering, search indexing pipelines, self-serve automation, caching, query optimization, distributed systems
-            - Key achievements: Took end-to-end ownership of deployment infrastructure (Kubernetes, Helm, CI/CD) for a cloud-native SaaS platform; designed real-time session management using WebSocket keep-alive/heartbeat with automatic idle-logout detection; built internal network onboarding automation reducing effort by 95% across 1,000+ services; built org-wide, search-backend-agnostic Confluence search plugin via Backstage; architected observability platform cutting production diagnosis time from hours to minutes
-            - Certifications: AWS Certified Cloud Practitioner
-            - Open source: published npm Backstage plugin, contributor to 10K-star project (JSONCrack), LeetCode Top 15%
-            - Looking for: backend, full stack, or developer platform SDE roles
+            - Key achievements: Owned backend development for a microservices-based platform, delivering Java and Spring Boot feature APIs in an Agile environment; replaced blocking inter-service calls with Spring WebClient to improve responsiveness; parallelized independent operations with CompletableFuture to reduce end-to-end latency for high-traffic APIs; improved API latency to under 3 seconds through database indexing, query optimization, multithreading, and caching; implemented Redis caching for authentication tokens to reduce redundant lookups and improve response times; authored AWS Glue scripts to transform and load data for backend database workflows; diagnosed and resolved critical production issues to improve service stability and reliability
+            - Open source: LeetCode 1400+ rating in weekly contest; best debutant award at philips @2025
+            - Looking for: backend, full stack, software engineer or sde roles, preferably in cloud-native SaaS platforms, distributed systems
           model: openai/gpt-oss-120b
           endpoint: https://api.groq.com/openai/v1
           token: ${{ secrets.GROQ_API_SECRET }}
@@ -81,17 +80,16 @@ jobs:
             Do NOT mention any industry or domain terms — no healthcare, hospital, medical, ultrasound, diagnostic, clinical, equipment, or fleet.
 
             Candidate profile:
-            - Title: Software Development Engineer II at Philips, 3+ years experience
+            - Title: Software Development Engineer I at Philips, 2+ years experience
             - Backend: Java, Spring Boot, Node.js, Express.js, Kafka, Redis, PostgreSQL, MongoDB, JVM, Java EE
-            - Frontend: React.js, TypeScript, Micro Frontends
+            - Frontend: React.js, Micro Frontends
             - Cloud & Infra: AWS (EKS, S3, Secrets Manager), Kubernetes, Docker, Helm
             - Observability: OpenTelemetry, Prometheus, Grafana, AWS CloudWatch
             - Platform: Backstage, search indexing pipelines, self-serve developer automation
-            - Certifications: AWS Certified Cloud Practitioner
-            - Strengths: Microservices, distributed systems, REST APIs, developer platform engineering
+            - Strengths: Microservices, distributed systems, REST APIs, scaling
 
             Format: "Role | Skill | Skill | Skill | Skill | Experience"
-            Example: "SDE II | Java | Spring Boot | Backstage | AWS | 3+ Years"
+            Example: "SDE I | Java | Spring Boot | Cloud | AWS | 2+ Years"
             Return only the headline, nothing else.
           model: openai/gpt-oss-120b
           endpoint: https://api.groq.com/openai/v1
