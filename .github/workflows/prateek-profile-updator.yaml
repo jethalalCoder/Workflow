@@ -5,10 +5,10 @@ on:
     # GitHub cron runs in UTC. Times noted are IST equivalents (UTC + 5:30),
     # spread across peak recruiter hours so the profile stays fresh through the day.
     - cron: '0 4 * * *' # 09:30 IST
-    - cron: '30 6 * * *' # 12:00 IST
-    - cron: '0 9 * * *' # 14:30 IST
-    - cron: '30 11 * * *' # 17:00 IST
-    - cron: '30 13 * * *' # 19:00 IST
+    # - cron: '30 6 * * *' # 12:00 IST
+    # - cron: '0 9 * * *' # 14:30 IST
+    # - cron: '30 11 * * *' # 17:00 IST
+    # - cron: '30 13 * * *' # 19:00 IST
   workflow_dispatch:
 
 jobs:
